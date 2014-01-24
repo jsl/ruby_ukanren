@@ -34,6 +34,10 @@ module Ukanren
       end
     end
 
+    def unit(s_c)
+      cons(s_c, mzero)
+    end
+
     # -- Constrain u to be equal to v.
     def eq(u, v)
       ->(s_c) {
