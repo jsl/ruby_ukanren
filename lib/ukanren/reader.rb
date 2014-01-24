@@ -24,7 +24,8 @@ module Ukanren
       raise SyntaxError, "No tokens to read!" if toks.empty?
       token = toks.shift
 
-      if token == LPAREN
+      case token
+      when LPAREN
         list = []
 
         while toks.first != RPAREN
@@ -32,7 +33,7 @@ module Ukanren
         end
         toks.shift # shift off RPAREN
         list
-      elsif token == RPAREN
+      when RPAREN
         raise SyntaxError, "Unexpected RPAREN!"
       else
         atom(token)
