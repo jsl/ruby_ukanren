@@ -91,13 +91,13 @@ module Ukanren
 
     def disj(g1, g2)
       -> (s_c) {
-        mplus(g1(s_c), g2(s_c))
+        mplus(g1.call(s_c), g2.call(s_c))
       }
     end
 
     def conj(g1, g2)
       -> (s_c) {
-        bind(g1(s_c), g2)
+        bind(g1.call(s_c), g2)
       }
     end
 
