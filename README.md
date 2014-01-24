@@ -46,7 +46,7 @@ The code in this gem is closely based on the following sources:
 ## Dependencies
 
 This project requires Ruby 2.0 or higher. You can see which Rubies work with
-this project in the [Travis CI Build Status]((https://travis-ci.org/jsl/ruby_ukanren)).
+this project in the [Travis CI Build Status](https://travis-ci.org/jsl/ruby_ukanren).
 
 ## Contributing
 
