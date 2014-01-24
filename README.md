@@ -43,6 +43,11 @@ The code in this gem is closely based on the following sources:
 * Finally, I used the [microKanren examples in Scheme](https://github.com/jasonhemann/microKanren)
   to see if this port worked as expected.
 
+## Dependencies
+
+This project requires Ruby 2.0 or higher. You can see which Rubies work with
+this project in the [Travis CI Build Status]((https://travis-ci.org/jsl/ruby_ukanren)).
+
 ## Contributing
 
 1. Fork it ( http://github.com/jsl/ruby_ukanren/fork )
