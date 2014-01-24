@@ -1,5 +1,5 @@
 module Ukanren
-  module Language
+  module Core
     include Lisp
 
     def var(*c)       ; Array.new(c)   ; end
@@ -48,7 +48,7 @@ module Ukanren
 
     # Walk environment S and look up value of U, if present.
     def walk(u, s)
-      if var?(u) then
+      if var?(u)
         pr = assp(-> (v) { u == v }, s)
         pr ? walk(cdr(pr), s) : u
 

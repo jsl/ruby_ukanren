@@ -20,7 +20,7 @@ Or install it yourself as:
 
 ```ruby
 require 'ukanren'
-include Ukanren::Language
+include Ukanren::Core
 
 call_fresh(-> (q) { eq(q, 5) }).call(empty_env)
 

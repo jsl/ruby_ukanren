@@ -1,7 +1,7 @@
 require 'spec_helper'
 
-describe Ukanren::Language do
-  include Ukanren::Language
+describe Ukanren::Core do
+  include Ukanren::Core
 
   describe "#call_fresh" do
     it "second-set t1" do
