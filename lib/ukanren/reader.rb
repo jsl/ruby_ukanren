@@ -33,6 +33,7 @@ module Ukanren
         end
         toks.shift # shift off RPAREN
         list
+
       when RPAREN
         raise SyntaxError, "Unexpected RPAREN!"
       else
