@@ -38,7 +38,7 @@ module Ukanren
       cons(s_c, mzero)
     end
 
-    # -- Constrain u to be equal to v.
+    # Constrain u to be equal to v.
     def eq(u, v)
       ->(s_c) {
         s = unify(u, v, car(s_c))
@@ -68,9 +68,7 @@ module Ukanren
     def mplus(d1, d2)
       if d1.nil?
         d2
-      elsif d1 == mzero
-        d2
-      elsif d1.is_a?(Proc)
+      elsif d1.is_a?(Proc) && !cons_cell?(d1)
         -> { mplus(d2, d1.call) }
       else
         cons(car(d1), mplus(cdr(d1), d2))
@@ -80,12 +78,10 @@ module Ukanren
     def bind(d, g)
       if d.nil?
         mzero
-      elsif d == mzero
-        mzero
-      elsif d.is_a?(Proc)
+      elsif d.is_a?(Proc) && !cons_cell?(d)
         -> { bind(d.call, g) }
       else
-        mplus(g(car(d)), bind(cdr(d), g))
+        mplus(g.call(car(d)), bind(cdr(d), g))
       end
     end
 

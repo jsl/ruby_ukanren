@@ -1,9 +1,19 @@
 module Ukanren
   module Lisp
 
-    def cons(x, y) ; -> (m) { m.call(x, y) } ; end
+    # Returns a Cons cell that is also marked as such for later identification.
+    def cons(x, y)
+      -> (m) { m.call(x, y) }.tap do |func|
+        func.instance_eval{ def cons_cell? ; true ; end }
+      end
+    end
+
     def car(z)     ; z.call(-> (p, q) { p }) ; end
     def cdr(z)     ; z.call(-> (p, q) { q }) ; end
+
+    def cons_cell?(d)
+      d.respond_to?(:cons_cell?) && d.cons_cell?
+    end
 
     # Search association list by predicate function.
     # Based on lua implementation by silentbicycle:
