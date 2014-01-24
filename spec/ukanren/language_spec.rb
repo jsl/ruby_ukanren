@@ -7,11 +7,11 @@ describe Ukanren::Language do
     it "second-set t1" do
       res = call_fresh(-> (q) { eq(q, 5) }).call(empty_env)
 
-      # The result should be (((0 . 5 )) . 1)) following the reference
+      # The result should be ((([0] . 5 )) . 1)) following the reference
       # implementation:
       # https://github.com/jasonhemann/microKanren/blob/master/microKanren-test.scm#L6
 
-      # We don't have a pretty printer yet, so here goes:
+      # We don't have a pretty printer for our lambda-conses, so here goes:
       car(car(car(car(res)))).must_equal [0]
       cdr(car(res)).must_equal 1
       cdr(car(car(car(res)))).must_equal 5

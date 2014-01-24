@@ -9,8 +9,8 @@ Gem::Specification.new do |spec|
   spec.authors       = ["Justin Leitgeb"]
   spec.email         = ["justin@stackbuilders.com"]
   spec.summary       = %q{uKanren in Ruby}
-  spec.description   = %q{Implements uKanren paper in Ruby}
-  spec.homepage      = ""
+  spec.description   = %q{A port of uKanren to Ruby.}
+  spec.homepage      = "http://github.com/jsl/ruby_ukanren"
   spec.license       = "MIT"
 
   spec.files         = `git ls-files -z`.split("\x0")
