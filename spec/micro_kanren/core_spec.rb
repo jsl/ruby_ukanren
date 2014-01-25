@@ -1,7 +1,7 @@
 require 'spec_helper'
 
-describe Ukanren::Core do
-  include Ukanren::Core
+describe MicroKanren::Core do
+  include MicroKanren::Core
 
   describe "#call_fresh" do
     it "second-set t1" do
@@ -44,5 +44,18 @@ describe Ukanren::Core do
       cdr(car(cdr(car(car(res))))).must_equal 7
       cdr(car(res)).must_equal 2
     end
+
+    def fives
+      -> (x) {
+        disj(eq(x, 5), -> (a_c) { -> { fives(x).call(a_c) } })
+      }
+    end
+
+    it "who cares" do # Apparently not the authors of the reference implementation...
+      skip("Create proper assertion for this test")
+      l = -> (q) { fives.call(q) }
+      res = call_fresh(l).call(empty_state)
+    end
+
   end
 end

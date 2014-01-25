@@ -1,4 +1,4 @@
-module Ukanren
+module MicroKanren
   module Core
     include Lisp
 

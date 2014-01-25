@@ -1,4 +1,4 @@
-module Ukanren
+module MicroKanren
   module Lisp
 
     # Returns a Cons cell that is also marked as such for later identification.

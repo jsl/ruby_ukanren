@@ -1,7 +1,7 @@
 require 'spec_helper'
 
-describe Ukanren::Lisp do
-  include Ukanren::Lisp
+describe MicroKanren::Lisp do
+  include MicroKanren::Lisp
 
   describe "#car" do
     it "returns the first element in the pair" do

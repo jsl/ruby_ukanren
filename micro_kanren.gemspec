@@ -1,11 +1,11 @@
 # coding: utf-8
 lib = File.expand_path('../lib', __FILE__)
 $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
-require 'ukanren/version'
+require 'micro_kanren/version'
 
 Gem::Specification.new do |spec|
-  spec.name          = "ruby_ukanren"
-  spec.version       = Ukanren::VERSION
+  spec.name          = "micro_kanren"
+  spec.version       = MicroKanren::VERSION
   spec.authors       = ["Justin Leitgeb"]
   spec.email         = ["justin@stackbuilders.com"]
   spec.summary       = %q{uKanren in Ruby}

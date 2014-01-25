@@ -6,7 +6,7 @@ A port of microKanren, a minimalistic logic programming language, to Ruby.
 
 Add this line to your application's Gemfile:
 
-    gem 'ruby_ukanren'
+    gem 'micro_kanren'
 
 And then execute:
 
@@ -14,13 +14,13 @@ And then execute:
 
 Or install it yourself as:
 
-    $ gem install ruby_ukanren
+    $ gem install micro_kanren
 
 ## Usage
 
 ```ruby
-require 'ukanren'
-include Ukanren::Core
+require 'micro_kanren'
+include MicroKanren::Core
 
 call_fresh(-> (q) { eq(q, 5) }).call(empty_state)
 
