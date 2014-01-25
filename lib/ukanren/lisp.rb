@@ -27,5 +27,19 @@ module Ukanren
       end
     end
 
+    # A nicer printed representation of nested cons cells represented by Ruby
+    # Procs.
+    def print_ast(node)
+      if cons_cell?(node)
+        ['(', print_ast(car(node)), ' . ', print_ast(cdr(node)), ')'].join
+      else
+        case node
+        when NilClass, Array, String
+          node.inspect
+        else
+          node.to_s
+        end
+      end
+    end
   end
 end
