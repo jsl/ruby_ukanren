@@ -5,7 +5,7 @@ describe Ukanren::Core do
 
   describe "#call_fresh" do
     it "second-set t1" do
-      res = call_fresh(-> (q) { eq(q, 5) }).call(empty_env)
+      res = call_fresh(-> (q) { eq(q, 5) }).call(empty_state)
 
       # The result should be ((([0] . 5 )) . 1)) following the reference
       # implementation:
@@ -18,7 +18,7 @@ describe Ukanren::Core do
     end
 
     it "second-set t2" do
-      res = call_fresh(-> (q) { eq(q, 5) }).call(empty_env)
+      res = call_fresh(-> (q) { eq(q, 5) }).call(empty_state)
 
       # Following reference implementation:
       # https://github.com/jasonhemann/microKanren/blob/master/microKanren-test.scm#L11
@@ -33,7 +33,7 @@ describe Ukanren::Core do
     end
 
     it "second-set t3" do
-      res = a_and_b.call(empty_env)
+      res = a_and_b.call(empty_state)
 
       # The result should be ((([1] . 5) ([0] . 7)) . 2)) following the reference
       # implementation:

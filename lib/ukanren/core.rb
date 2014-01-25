@@ -97,7 +97,7 @@ module Ukanren
       }
     end
 
-    def empty_env
+    def empty_state
       cons(mzero, 0)
     end
   end

@@ -22,7 +22,7 @@ Or install it yourself as:
 require 'ukanren'
 include Ukanren::Core
 
-call_fresh(-> (q) { eq(q, 5) }).call(empty_env)
+call_fresh(-> (q) { eq(q, 5) }).call(empty_state)
 
 # The result is a set of nested lambda cons cells equivalent to ((([0] . 5 )) . 1)).
 ```
