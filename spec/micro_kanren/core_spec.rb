@@ -13,7 +13,7 @@ describe MicroKanren::Core do
       # implementation:
       # https://github.com/jasonhemann/microKanren/blob/master/microKanren-test.scm#L6
 
-      #     ( ( (   #(0)                      . 5 ) ) . 1  ) )
+      #       ( ( ( #(0)                      . 5 ) ) . 1  )
       exp = [ [ [ [ MicroKanren::Var.new([0]) , 5 ] ] , 1  ] ]
       expected = ary_to_sexp(exp)
 
@@ -35,16 +35,15 @@ describe MicroKanren::Core do
       conj(call_fresh(a), call_fresh(b))
     end
 
+    # https://github.com/jasonhemann/microKanren/blob/master/microKanren-test.scm#L13
     it "second-set t3" do
       res = car(a_and_b.call(empty_state))
 
-      # The result should be ((([1] . 5) ([0] . 7)) . 2)) following the reference
-      # implementation:
-      # https://github.com/jasonhemann/microKanren/blob/master/microKanren-test.scm#L13
-      expected =
-        ary_to_sexp([[[MicroKanren::Var.new([1]), 5], [[MicroKanren::Var.new([0]), 7]]], 2])
+      #     ( ( ( #(1)                      . 5)    ( #(0)                     . 7 ) )   . 2)
+      exp = [ [ [ MicroKanren::Var.new([1]) , 5], [ [MicroKanren::Var.new([0]) , 7 ] ] ] , 2]
+      sexp = ary_to_sexp(exp)
 
-      lists_equal?(res, expected).must_equal true
+      lists_equal?(res, sexp).must_equal true
     end
 
     def fives
@@ -56,9 +55,11 @@ describe MicroKanren::Core do
     it "who cares" do
       res = take(1, call_fresh(-> (q) { fives.call(q) }).call(empty_state))
 
-      # Result should be: ( ( ( ( #(0) . 5) ) . 1) )
-      expected_ast = ary_to_sexp([[[[MicroKanren::Var.new([0]), 5]], 1]])
-      lists_equal?(res, expected_ast).must_equal true
+      #     ( ( ( ( #(0)                     . 5) ) . 1 ) )
+      exp = [ [ [ [ MicroKanren::Var.new([0]), 5] ] , 1 ] ]
+
+      sexp = ary_to_sexp(exp)
+      lists_equal?(res, sexp).must_equal true
     end
 
   end
