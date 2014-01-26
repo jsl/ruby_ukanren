@@ -2,8 +2,8 @@ module MicroKanren
   module Core
     include Lisp
 
-    def var(*c)       ; Array.new(c)   ; end
-    def var?(x)       ; x.is_a?(Array) ; end
+    def var(*c)       ; Var.new(c)   ; end
+    def var?(x)       ; x.is_a?(Var) ; end
 
     def vars_eq?(x1, x2) ; x1 == x2    ; end
 

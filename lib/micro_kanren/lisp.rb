@@ -29,12 +29,12 @@ module MicroKanren
 
     # Turns a Ruby array into an s-expression.
     def ary_to_sexp(ary)
-      head = ary[0].is_a?(Array) ? ary_to_sexp(ary[0]) : ary[0]
+      head = ary[0].is_a?(Array) && !ary[0].is_a?(MicroKanren::Var) ? ary_to_sexp(ary[0]) : ary[0]
 
       if ary.length > 2
         cons(head, ary_to_sexp(ary[1..-1]))
       else
-        tail = ary[1].is_a?(Array) ? ary_to_sexp(ary[1]) : ary[1]
+        tail = ary[1].is_a?(Array) && !ary[0].is_a?(MicroKanren::Var) ? ary_to_sexp(ary[1]) : ary[1]
         cons(head, tail)
       end
     end

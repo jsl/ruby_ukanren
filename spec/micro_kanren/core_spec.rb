@@ -3,6 +3,7 @@ require 'spec_helper'
 describe MicroKanren::Core do
   include MicroKanren::Core
   include MicroKanren::MiniKanrenWrappers
+  include MicroKanren::Lisp
 
   describe "#call_fresh" do
     it "second-set t1" do
@@ -12,10 +13,9 @@ describe MicroKanren::Core do
       # implementation:
       # https://github.com/jasonhemann/microKanren/blob/master/microKanren-test.scm#L6
 
-      # We don't have a pretty printer for our lambda-conses, so here goes:
-      car(car(car(car(res)))).must_equal [0]
-      cdr(car(res)).must_equal 1
-      cdr(car(car(car(res)))).must_equal 5
+      expected = ary_to_sexp([[[[MicroKanren::Var.new([0]), 5]], 1]])
+
+      lists_equal?(res, expected).must_equal true
     end
 
     it "second-set t2" do
@@ -34,16 +34,15 @@ describe MicroKanren::Core do
     end
 
     it "second-set t3" do
-      res = a_and_b.call(empty_state)
+      res = car(a_and_b.call(empty_state))
 
       # The result should be ((([1] . 5) ([0] . 7)) . 2)) following the reference
       # implementation:
       # https://github.com/jasonhemann/microKanren/blob/master/microKanren-test.scm#L13
-      car(car(car(car(res)))).must_equal [1]
-      cdr(car(car(car(res)))).must_equal 5
-      car(car(cdr(car(car(res))))).must_equal [0]
-      cdr(car(cdr(car(car(res))))).must_equal 7
-      cdr(car(res)).must_equal 2
+      expected =
+        ary_to_sexp([[[MicroKanren::Var.new([1]), 5], [[MicroKanren::Var.new([0]), 7]]], 2])
+
+      lists_equal?(res, expected).must_equal true
     end
 
     def fives
