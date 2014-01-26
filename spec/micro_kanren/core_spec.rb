@@ -53,7 +53,9 @@ describe MicroKanren::Core do
 
     it "who cares" do
       res = take(1, call_fresh(-> (q) { fives.call(q) }).call(empty_state))
-      expected_ast = cons(cons(cons(cons([0], 5), nil), 1), nil)
+
+      # Result should be: ( ( ( ( #(0) . 5) ) . 1) )
+      expected_ast = ary_to_sexp([[[[MicroKanren::Var.new([0]), 5]], 1]])
       lists_equal?(res, expected_ast).must_equal true
     end
 
