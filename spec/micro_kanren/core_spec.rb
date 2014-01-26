@@ -53,8 +53,9 @@ describe MicroKanren::Core do
     end
 
     it "who cares" do
-      # skip("Create proper assertion for this test")
-      res = call_fresh(-> (q) { fives.call(q) }).call(empty_state)
+      res = take(1, call_fresh(-> (q) { fives.call(q) }).call(empty_state))
+      expected_ast = cons(cons(cons(cons([0], 5), nil), 1), nil)
+      lists_equal?(res, expected_ast).must_equal true
     end
 
   end

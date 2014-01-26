@@ -55,4 +55,14 @@ describe MicroKanren::Lisp do
       ast_to_s(cons('a', nil)).must_equal '("a")'
     end
   end
+
+  describe "#lists_equal?" do
+    it "is true if the lists are equal" do
+      lists_equal?(cons(1, cons(2, nil)), cons(1, cons(2, nil))).must_equal true
+    end
+
+    it "is false if the lists contain different objects" do
+      lists_equal?(cons(1, cons(2, nil)), cons(1, nil)).must_equal false
+    end
+  end
 end

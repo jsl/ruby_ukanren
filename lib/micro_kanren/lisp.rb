@@ -27,9 +27,8 @@ module MicroKanren
       end
     end
 
-    # A nicer printed representation of nested cons cells represented by Ruby
-    # Procs. Algorithm is a recursive implementation of
-    # http://www.mat.uc.pt/~pedro/cientificos/funcional/lisp/gcl_22.html#SEC1238
+    # Converts Lisp AST to a String. Algorithm is a recursive implementation of
+    # http://www.mat.uc.pt/~pedro/cientificos/funcional/lisp/gcl_22.html#SEC1238.
     def ast_to_s(node, cons_in_cdr = false)
       if cons_cell?(node)
         str = cons_in_cdr ? '' : '('
@@ -44,6 +43,14 @@ module MicroKanren
         cons_in_cdr ? str : str << ')'
       else
         atom_string(node)
+      end
+    end
+
+    def lists_equal?(a, b)
+      if cons_cell?(a) && cons_cell?(b)
+        lists_equal?(car(a), car(b)) && lists_equal?(cdr(a), cdr(b))
+      else
+        a == b
       end
     end
 

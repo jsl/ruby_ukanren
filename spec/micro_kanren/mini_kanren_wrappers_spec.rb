@@ -14,22 +14,4 @@ describe MicroKanren::MiniKanrenWrappers do
       pull(nil).must_be_nil
     end
   end
-
-# (define (take n $)
-#   (if (zero? n) '()
-#     (let (($ (pull $)))
-#       (if (null? $) '() (cons (car $) (take (- n 1) (cdr $)))))))
-
-  describe "#take" do
-    it "takes the specified number of items from the stream" do
-      skip("maybe I'm testing this wrong :(")
-      list = cons(1, ->{ 42 })
-
-      result = take(1, list)
-      # puts ast_to_s(result)
-
-      car(result).must_equal 1
-      cdr(result).must_equal 42
-    end
-  end
 end
