@@ -9,11 +9,13 @@ describe MicroKanren::Core do
     it "second-set t1" do
       res = call_fresh(-> (q) { eq(q, 5) }).call(empty_state)
 
-      # The result should be ((([0] . 5 )) . 1)) following the reference
+      # The result should be  following the reference
       # implementation:
       # https://github.com/jasonhemann/microKanren/blob/master/microKanren-test.scm#L6
 
-      expected = ary_to_sexp([[[[MicroKanren::Var.new([0]), 5]], 1]])
+      #     ( ( (   #(0)                      . 5 ) ) . 1  ) )
+      exp = [ [ [ [ MicroKanren::Var.new([0]) , 5 ] ] , 1  ] ]
+      expected = ary_to_sexp(exp)
 
       lists_equal?(res, expected).must_equal true
     end
