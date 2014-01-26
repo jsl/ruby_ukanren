@@ -29,25 +29,30 @@ describe MicroKanren::Lisp do
     end
   end
 
-  describe "#print_ast" do
+  describe "#ast_to_s" do
+    it "prints an expression correctly" do
+      c = cons(1, cons(2, cons(cons(3, cons(4, nil)), cons(5, nil))))
+      ast_to_s(c).must_equal "(1 2 (3 4) 5)"
+    end
+
     it "prints a cons cell representation of a simple cell" do
-      print_ast(cons('a', 'b')).must_equal '("a" . "b")'
+      ast_to_s(cons('a', 'b')).must_equal '("a" . "b")'
     end
 
     it "represents Integers and Floats" do
-      print_ast(cons(1, 2)).must_equal '(1 . 2)'
+      ast_to_s(cons(1, 2)).must_equal '(1 . 2)'
     end
 
     it "prints a nested expression" do
-      print_ast(cons('a', cons('b', 'c'))).must_equal '("a" . ("b" . "c"))'
+      ast_to_s(cons('a', cons('b', 'c'))).must_equal '("a" "b" . "c")'
     end
 
     it "represents Arrays (in scheme, vectors) correctly in printed form" do
-      print_ast(cons('a', [])).must_equal '("a" . [])'
+      ast_to_s(cons('a', [])).must_equal '("a" . [])'
     end
 
     it "represents nil elements (in scheme, '())" do
-      print_ast(cons('a', nil)).must_equal '("a" . nil)'
+      ast_to_s(cons('a', nil)).must_equal '("a")'
     end
   end
 end

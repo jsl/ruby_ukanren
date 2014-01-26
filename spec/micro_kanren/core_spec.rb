@@ -2,6 +2,7 @@ require 'spec_helper'
 
 describe MicroKanren::Core do
   include MicroKanren::Core
+  include MicroKanren::MiniKanrenWrappers
 
   describe "#call_fresh" do
     it "second-set t1" do
@@ -51,10 +52,9 @@ describe MicroKanren::Core do
       }
     end
 
-    it "who cares" do # Apparently not the authors of the reference implementation...
-      skip("Create proper assertion for this test")
-      l = -> (q) { fives.call(q) }
-      res = call_fresh(l).call(empty_state)
+    it "who cares" do
+      # skip("Create proper assertion for this test")
+      res = call_fresh(-> (q) { fives.call(q) }).call(empty_state)
     end
 
   end
