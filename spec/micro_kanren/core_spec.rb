@@ -5,6 +5,10 @@ describe MicroKanren::Core do
   include MicroKanren::MiniKanrenWrappers
   include MicroKanren::Lisp
 
+  def uvar(v)
+    MicroKanren::Var.new([v])
+  end
+
   describe "#call_fresh" do
     it "second-set t1" do
       res = call_fresh(-> (q) { eq(q, 5) }).call(empty_state)
@@ -13,8 +17,8 @@ describe MicroKanren::Core do
       # implementation:
       # https://github.com/jasonhemann/microKanren/blob/master/microKanren-test.scm#L6
 
-      #       ( ( ( #(0)                      . 5 ) ) . 1  )
-      exp = [ [ [ [ MicroKanren::Var.new([0]) , 5 ] ] , 1  ] ]
+      #       ( ( ( #(0)    . 5 ) ) . 1  )
+      exp = [ [ [ [ uvar(0) , 5 ] ] , 1  ] ]
       expected = ary_to_sexp(exp)
 
       lists_equal?(res, expected).must_equal true
@@ -39,8 +43,8 @@ describe MicroKanren::Core do
     it "second-set t3" do
       res = car(a_and_b.call(empty_state))
 
-      #     ( ( ( #(1)                      . 5)    ( #(0)                     . 7 ) )   . 2)
-      exp = [ [ [ MicroKanren::Var.new([1]) , 5], [ [MicroKanren::Var.new([0]) , 7 ] ] ] , 2]
+      #     ( ( ( #(1)    . 5)    ( #(0)   . 7 ) )   . 2)
+      exp = [ [ [ uvar(1) , 5], [ [uvar(0) , 7 ] ] ] , 2]
       sexp = ary_to_sexp(exp)
 
       lists_equal?(res, sexp).must_equal true
@@ -55,8 +59,8 @@ describe MicroKanren::Core do
     it "who cares" do
       res = take(1, call_fresh(-> (q) { fives.call(q) }).call(empty_state))
 
-      #     ( ( ( ( #(0)                     . 5) ) . 1 ) )
-      exp = [ [ [ [ MicroKanren::Var.new([0]), 5] ] , 1 ] ]
+      #     ( ( ( ( #(0) . 5) ) . 1 ) )
+      exp = [ [ [ [ uvar(0), 5] ] , 1 ] ]
 
       sexp = ary_to_sexp(exp)
       lists_equal?(res, sexp).must_equal true
