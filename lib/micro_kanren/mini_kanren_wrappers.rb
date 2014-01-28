@@ -16,5 +16,10 @@ module MicroKanren
       end
     end
 
+    def take_all(stream)
+      if cur = pull(stream)
+        cons(car(cur), take_all(cdr(cur)))
+      end
+    end
   end
 end

@@ -53,8 +53,6 @@ describe MicroKanren::Core do
     end
 
     it "take 2 a_and_b stream" do
-      res = take(2, a_and_b.call(empty_state))
-
       # Expected result in scheme:
       # ((((#(1) . 5) (#(0) . 7)) . 2)
       #  (((#(1) . 6) (#(0) . 7)) . 2))
@@ -69,6 +67,24 @@ describe MicroKanren::Core do
       # against what we expect in something closer to scheme.
       ast_to_s(ary_to_sexp(exp)).must_equal expected_ast_string
 
+      res = take(2, a_and_b.call(empty_state))
+      lists_equal?(res, ary_to_sexp(exp)).must_equal true
+    end
+
+    it "take_all a_and_b stream" do
+      # Expected result in scheme:
+      # ((((#(1) . 5) (#(0) . 7)) . 2)
+      #  (((#(1) . 6) (#(0) . 7)) . 2))
+
+      expected_ast_string =
+        "(((([1] . 5) ([0] . 7)) . 2) ((([1] . 6) ([0] . 7)) . 2))"
+
+      exp = [[[[ uvar(1), 5 ], [[ uvar(0), 7 ]]], 2],
+             [[[[ uvar(1), 6 ], [[ uvar(0), 7 ]]], 2]]]
+
+      ast_to_s(ary_to_sexp(exp)).must_equal expected_ast_string
+
+      res = take_all(a_and_b.call(empty_state))
       lists_equal?(res, ary_to_sexp(exp)).must_equal true
     end
   end
