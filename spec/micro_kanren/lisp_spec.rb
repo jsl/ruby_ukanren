@@ -23,7 +23,7 @@ describe MicroKanren::Lisp do
   end
 
   describe "#assp" do
-    it "returns the first element for which the predicate function is true" do
+    it "returns the first pair for which the predicate function is true" do
       al1 = cons(3, cons(:a, nil))
       al2 = cons(1, cons(:b, nil))
       al3 = cons(4, cons(:c, nil))
@@ -35,11 +35,11 @@ describe MicroKanren::Lisp do
     end
 
     it "returns false if there is no matching element found" do
-      al1 = cons(3, cons(:a, nil))
-      al2 = cons(1, cons(:b, nil))
-      al3 = cons(4, cons(:c, nil))
+      pair1 = cons(3, cons(:a, nil))
+      pair2 = cons(1, cons(:b, nil))
+      pair3 = cons(4, cons(:c, nil))
 
-      alist = cons(al1, cons(al2, cons(al3, nil)))
+      alist = cons(pair1, cons(pair2, cons(pair3, nil)))
 
       res = assp(->(i) { i == 5 }, alist)
       res.must_equal false
