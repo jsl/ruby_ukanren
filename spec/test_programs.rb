@@ -28,6 +28,24 @@ module MicroKanren
                       -> {appendo.call(d, s, res).call(s_c)}})}))})}))}
     end
 
+    def appendo2
+      -> (l, s, out) {
+        disj(
+          conj(eq(nil, l), eq(s, out)),
+          call_fresh(-> (a) {
+            call_fresh(-> (d) {
+              conj(
+                eq(cons(a, d), l),
+                call_fresh(-> (res) {
+                  conj(
+                    -> (s_c) {
+                      -> { appendo2.call(d, s, res).call(s_c) }
+                    },
+                    eq(cons(a, res), out)
+                  )
+                }))})}))}
+    end
+
     def call_appendo
       call_fresh(-> (q) {
         call_fresh(-> (l) {
@@ -38,8 +56,23 @@ module MicroKanren
                 eq(cons(l, cons(s, cons(out, nil))), q))})})})})
     end
 
+    def call_appendo2
+      call_fresh(-> (q) {
+        call_fresh(-> (l) {
+          call_fresh(-> (s) {
+            call_fresh(-> (out) {
+              conj(
+                appendo2.call(l, s, out),
+                eq(cons(l, cons(s, cons(out, nil))), q))})})})})
+    end
+
     def ground_appendo
       appendo.call(cons(:a, nil), cons(:b, nil), cons(:a, cons(:b, nil)))
     end
+
+    def ground_appendo2
+      appendo2.call(cons(:a, nil), cons(:b, nil), cons(:a, cons(:b, nil)))
+    end
+
   end
 end
