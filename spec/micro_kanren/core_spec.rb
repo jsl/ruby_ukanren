@@ -5,9 +5,8 @@ describe MicroKanren::Core do
   include MicroKanren::MiniKanrenWrappers
   include MicroKanren::Lisp
 
-  def uvar(v)
-    MicroKanren::Var.new([v])
-  end
+  include MicroKanren::TestPrograms
+  include MicroKanren::TestSupport
 
   describe "#call_fresh" do
     it "second-set t1" do
@@ -32,13 +31,6 @@ describe MicroKanren::Core do
       cdr(res).must_be_nil
     end
 
-    def a_and_b
-      a = -> (a) { eq(a, 7) }
-      b = -> (b) { disj(eq(b, 5), eq(b, 6)) }
-
-      conj(call_fresh(a), call_fresh(b))
-    end
-
     # https://github.com/jasonhemann/microKanren/blob/master/microKanren-test.scm#L13
     it "second-set t3" do
       res = car(a_and_b.call(empty_state))
@@ -48,12 +40,6 @@ describe MicroKanren::Core do
       sexp = ary_to_sexp(exp)
 
       lists_equal?(res, sexp).must_equal true
-    end
-
-    def fives
-      -> (x) {
-        disj(eq(x, 5), -> (a_c) { -> { fives(x).call(a_c) } })
-      }
     end
 
     it "who cares" do
