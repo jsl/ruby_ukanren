@@ -107,5 +107,10 @@ describe MicroKanren::Core do
       # representation of our cons cell.
       ast_to_s(res).must_equal expected_ast_string
     end
+
+    it "appendo" do
+      res = ast_to_s(take(2, call_appendo.call(empty_state)))
+      res.must_equal '(((([0] [1] [2] [3]) ([2] . [3]) ([1])) . 4) ((([0] [1] [2] [3]) ([2] . [6]) ([5]) ([3] [4] . [6]) ([1] [4] . [5])) . 7))'
+    end
   end
 end
