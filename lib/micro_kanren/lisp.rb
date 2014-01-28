@@ -29,8 +29,17 @@ module MicroKanren
     # Additional reference for this function is scheme:
     # Ref for assp: http://www.r6rs.org/final/html/r6rs-lib/r6rs-lib-Z-H-4.html
     def assp(func, alist)
-      if alist && hd = car(alist)
-        func.call(hd) ? hd : assp(func, cdr(alist))
+      if alist
+        first_pair  = car(alist)
+        first_value = car(first_pair)
+
+        if func.call(first_value)
+          first_pair
+        else
+          assp(func, cdr(alist))
+        end
+      else
+        false
       end
     end
 

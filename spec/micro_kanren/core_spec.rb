@@ -89,7 +89,6 @@ describe MicroKanren::Core do
     end
 
     it "ground appendo" do
-      skip("Ground appendo tests not working.")
       res = car(ground_appendo.call(empty_state).call)
 
       # Expected result in scheme:
@@ -110,7 +109,6 @@ describe MicroKanren::Core do
     end
 
     it "ground appendo2" do
-      skip("Ground appendo tests not working.")
       res = ast_to_s(car(ground_appendo2.call(empty_state).call))
       res.must_equal '((([2] b) ([1]) ([0] . a)) . 3)'
     end

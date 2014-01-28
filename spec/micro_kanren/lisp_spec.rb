@@ -24,8 +24,25 @@ describe MicroKanren::Lisp do
 
   describe "#assp" do
     it "returns the first element for which the predicate function is true" do
-      alist = cons(1, cons(2, cons(3, 4)))
-      assp(->(i) { i == 3 }, alist).must_equal 3
+      al1 = cons(3, cons(:a, nil))
+      al2 = cons(1, cons(:b, nil))
+      al3 = cons(4, cons(:c, nil))
+
+      alist = cons(al1, cons(al2, cons(al3, nil)))
+
+      res = assp(->(i) { i.even? }, alist)
+      lists_equal?(res, cons(4, cons(:c, nil))).must_equal true
+    end
+
+    it "returns false if there is no matching element found" do
+      al1 = cons(3, cons(:a, nil))
+      al2 = cons(1, cons(:b, nil))
+      al3 = cons(4, cons(:c, nil))
+
+      alist = cons(al1, cons(al2, cons(al3, nil)))
+
+      res = assp(->(i) { i == 5 }, alist)
+      res.must_equal false
     end
   end
 
