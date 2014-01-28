@@ -12,5 +12,24 @@ module MicroKanren
         disj(eq(x, 5), -> (a_c) { -> { fives(x).call(a_c) } })
       }
     end
+
+    def appendo
+      -> (l, s, out) {
+        disj(
+          conj(eq(nil, l), eq(s, out)),
+          call_fresh(-> (a) {
+            call_fresh(-> (d) {
+              conj(
+                eq(cons(a, d), l),
+                call_fresh(-> (res) {
+                  conj(
+                    eq(cons(a, res), out),
+                    -> (s_c) {
+                      -> {appendo.call(d, s, res).call(s_c)}})}))})}))}
+    end
+
+    def ground_appendo
+      appendo.call(cons(:a, nil), cons(:b, nil), cons(:a, cons(:b, nil)))
+    end
   end
 end

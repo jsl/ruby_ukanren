@@ -2,10 +2,14 @@ module MicroKanren
   module MiniKanrenWrappers
     include Lisp
 
+    def empty_state
+      cons(mzero, 0)
+    end
+
     # Advances a stream until it matures. Per microKanren document 5.2, "From
     # Streams to Lists."
     def pull(stream)
-      stream.is_a?(Proc) && !cons_cell?(stream) ? pull(stream.call) : stream
+      stream.is_a?(Proc) && !cons?(stream) ? pull(stream.call) : stream
     end
 
     def take(n, stream)

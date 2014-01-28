@@ -29,6 +29,25 @@ describe MicroKanren::Lisp do
     end
   end
 
+  # http://download.plt-scheme.org/doc/html/reference/pairs.html#(def._((quote._~23~25kernel)._pair~3f))
+  describe "#pair?" do
+    it "is false for an integer" do
+      pair?(1).must_equal false
+    end
+
+    it "is true for a list with an int in the car and cdr" do
+      pair?(cons(1, 2)).must_equal true
+    end
+
+    it "is true for a proper list" do
+      pair?(cons(1, cons(2, nil))).must_equal true
+    end
+
+    it "is false for an empty list" do
+      pair?(nil).must_equal false
+    end
+  end
+
   describe "#ary_to_sexp" do
     it "returns a cons cell tree from an input Array" do
       input = ['a', 'b', 'c']

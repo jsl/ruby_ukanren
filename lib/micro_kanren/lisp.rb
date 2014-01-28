@@ -11,8 +11,15 @@ module MicroKanren
     def car(z)     ; z.call(-> (p, q) { p }) ; end
     def cdr(z)     ; z.call(-> (p, q) { q }) ; end
 
-    def cons_cell?(d)
+    def cons?(d)
       d.respond_to?(:ccel?) && d.ccel?
+    end
+    alias :pair? :cons?
+
+    # We implement scheme cons cells as Procs. This function returns a boolean
+    # identically to the Scheme procedure? function to avoid false positives.
+    def procedure?(elt)
+      elt.is_a?(Proc) && !cons?(elt)
     end
 
     # Search association list by predicate function.
@@ -42,11 +49,11 @@ module MicroKanren
     # Converts Lisp AST to a String. Algorithm is a recursive implementation of
     # http://www.mat.uc.pt/~pedro/cientificos/funcional/lisp/gcl_22.html#SEC1238.
     def ast_to_s(node, cons_in_cdr = false)
-      if cons_cell?(node)
+      if cons?(node)
         str = cons_in_cdr ? '' : '('
         str += ast_to_s(car(node))
 
-        if cons_cell?(cdr(node))
+        if cons?(cdr(node))
           str += ' ' + ast_to_s(cdr(node), true)
         else
           str += ' . ' + ast_to_s(cdr(node)) unless cdr(node).nil?
@@ -59,7 +66,7 @@ module MicroKanren
     end
 
     def lists_equal?(a, b)
-      if cons_cell?(a) && cons_cell?(b)
+      if cons?(a) && cons?(b)
         lists_equal?(car(a), car(b)) && lists_equal?(cdr(a), cdr(b))
       else
         a == b

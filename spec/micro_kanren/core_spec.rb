@@ -87,5 +87,25 @@ describe MicroKanren::Core do
       res = take_all(a_and_b.call(empty_state))
       lists_equal?(res, ary_to_sexp(exp)).must_equal true
     end
+
+    it "ground appendo" do
+      res = car(ground_appendo.call(empty_state).call)
+
+      # Expected result in scheme:
+      # (((#(2) b) (#(1)) (#(0) . a)) . 3)
+
+      expected_ast_string =
+        "((([2] b) ([1]) ([0] . a)) . 3)"
+
+      exp = cons(cons(cons(uvar(2), cons(:b, nil)),
+            cons(cons(uvar(1), nil), cons(cons(uvar(0), :a), nil))), 3)
+
+      # Make sure our cons expression above is the same as the expected string.
+      ast_to_s(exp).must_equal expected_ast_string
+
+      # Finally compare the string representation of the result with the string
+      # representation of our cons cell.
+      ast_to_s(res).must_equal expected_ast_string
+    end
   end
 end
