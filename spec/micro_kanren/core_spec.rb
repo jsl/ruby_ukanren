@@ -41,14 +41,24 @@ describe MicroKanren::Core do
     lists_equal?(res, sexp).must_equal true
   end
 
+  it "second set t3, take" do
+    res = take(1, (a_and_b.call(empty_state)))
+
+    ast_to_s(res).must_equal '(((([1] . 5) ([0] . 7)) . 2))'
+  end
+
+  it "second set t4" do
+    res = car(cdr(a_and_b.call(empty_state)))
+    ast_to_s(res).must_equal '((([1] . 6) ([0] . 7)) . 2)'
+  end
+
+  it "second set t5" do
+    cdr(cdr(a_and_b.call(empty_state))).must_be_nil
+  end
+
   it "who cares" do
     res = take(1, call_fresh(-> (q) { fives.call(q) }).call(empty_state))
-
-    #     ( ( ( ( #(0) . 5) ) . 1 ) )
-    exp = [ [ [ [ uvar(0), 5] ] , 1 ] ]
-
-    sexp = ary_to_sexp(exp)
-    lists_equal?(res, sexp).must_equal true
+    ast_to_s(res).must_equal '(((([0] . 5)) . 1))'
   end
 
   it "take 2 a_and_b stream" do
