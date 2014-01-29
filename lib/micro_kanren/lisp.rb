@@ -16,6 +16,14 @@ module MicroKanren
     end
     alias :pair? :cons?
 
+    def map(func, list)
+      cons(func.call(car(list)), map(func, cdr(list))) if list
+    end
+
+    def length(list)
+      list.nil? ? 0 : 1 + length(cdr(list))
+    end
+
     # We implement scheme cons cells as Procs. This function returns a boolean
     # identically to the Scheme procedure? function to avoid false positives.
     def procedure?(elt)

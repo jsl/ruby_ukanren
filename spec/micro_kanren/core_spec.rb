@@ -122,5 +122,33 @@ describe MicroKanren::Core do
       res = ast_to_s(take(2, call_appendo2.call(empty_state)))
       res.must_equal '(((([0] [1] [2] [3]) ([2] . [3]) ([1])) . 4) ((([0] [1] [2] [3]) ([3] [4] . [6]) ([2] . [6]) ([5]) ([1] [4] . [5])) . 7))'
     end
+
+    it "reify-1st across appendo" do
+      res = map(method(:reify_1st).to_proc, take(2, call_appendo.call(empty_state)))
+
+      # Expected result in scheme:
+      # ((() _.0 _.0) ((_.0) _.1 (_.0 . _.1)))
+
+      expected = cons(
+        cons(nil, cons(:'_.0', cons(:'_.0', nil))),
+        cons(cons(cons(:'_.0', nil), cons(:'_.1', cons(cons(:'_.0', :'_.1'), nil))), nil)
+      )
+
+      ast_to_s(res).must_equal '((nil _.0 _.0) ((_.0) _.1 (_.0 . _.1)))'
+    end
+
+    it "reify-1st across appendo2" do
+      res = map(method(:reify_1st).to_proc, take(2, call_appendo2.call(empty_state)))
+
+      # Expected result in scheme:
+      # ((() _.0 _.0) ((_.0) _.1 (_.0 . _.1)))
+
+      expected = cons(
+        cons(nil, cons(:'_.0', cons(:'_.0', nil))),
+        cons(cons(cons(:'_.0', nil), cons(:'_.1', cons(cons(:'_.0', :'_.1'), nil))), nil)
+      )
+
+      ast_to_s(res).must_equal '((nil _.0 _.0) ((_.0) _.1 (_.0 . _.1)))'
+    end
   end
 end

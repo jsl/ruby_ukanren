@@ -22,6 +22,23 @@ describe MicroKanren::Lisp do
     end
   end
 
+  describe "#length" do
+    it "returns 0 for an empty list" do
+      length(nil).must_equal 0
+    end
+
+    it "returns the list length for a non-empty list" do
+      length(cons(1, cons(2, nil))).must_equal 2
+    end
+  end
+
+  describe "#map" do
+    it "maps a function over a list" do
+      func = -> (str) { str.upcase }
+      ast_to_s(map(func, cons("foo", cons("bar", nil)))).must_equal '("FOO" "BAR")'
+    end
+  end
+
   describe "#assp" do
     it "returns the first pair for which the predicate function is true" do
       al1 = cons(3, cons(:a, nil))
