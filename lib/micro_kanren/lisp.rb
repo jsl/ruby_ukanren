@@ -51,18 +51,6 @@ module MicroKanren
       end
     end
 
-    # Turns a Ruby array into an s-expression.
-    def ary_to_sexp(ary)
-      head = ary[0].is_a?(Array) && !ary[0].is_a?(MicroKanren::Var) ? ary_to_sexp(ary[0]) : ary[0]
-
-      if ary.length > 2
-        cons(head, ary_to_sexp(ary[1..-1]))
-      else
-        tail = ary[1].is_a?(Array) && !ary[0].is_a?(MicroKanren::Var) ? ary_to_sexp(ary[1]) : ary[1]
-        cons(head, tail)
-      end
-    end
-
     # Converts Lisp AST to a String. Algorithm is a recursive implementation of
     # http://www.mat.uc.pt/~pedro/cientificos/funcional/lisp/gcl_22.html#SEC1238.
     def ast_to_s(node, cons_in_cdr = false)

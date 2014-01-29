@@ -82,20 +82,6 @@ describe MicroKanren::Lisp do
     end
   end
 
-  describe "#ary_to_sexp" do
-    it "returns a cons cell tree from an input Array" do
-      input = ['a', 'b', 'c']
-      result = ary_to_sexp(input)
-      lists_equal?(result, cons('a', cons('b', 'c'))).must_equal true
-    end
-
-    it "creates a valid sexp from nested arrays" do
-      input = [['a', [['b', 'c']]]]
-      result = ary_to_sexp(input)
-      ast_to_s(result).must_equal '(("a" ("b" . "c")))'
-    end
-  end
-
   describe "#ast_to_s" do
     it "prints an expression correctly" do
       c = cons(1, cons(2, cons(cons(3, cons(4, nil)), cons(5, nil))))
