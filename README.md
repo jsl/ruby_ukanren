@@ -1,11 +1,8 @@
 # microKanren in Ruby
 
-A port of microKanren, a minimalistic logic programming language, to Ruby.
-
-## Description
-
-This is a port of [microKanren](http://webyrd.net/scheme-2013/papers/HemannMuKanren2013.pdf)
-to Ruby. It is an almost exact translation of
+[microKanren](http://webyrd.net/scheme-2013/papers/HemannMuKanren2013.pdf) is a
+minimalist relational (logic) programming language. This project is a port of
+microKanren to Ruby. It is an almost exact translation of
 [the original implementation](https://github.com/jasonhemann/microKanren),
 which was written for [Petite Chez Scheme](http://www.scheme.com/petitechezscheme.html).
 
@@ -67,6 +64,15 @@ this project in the [Travis CI Build Status](https://travis-ci.org/jsl/ruby_ukan
 3. Commit your changes (`git commit -am 'Add some feature'`)
 4. Push to the branch (`git push origin my-new-feature`)
 5. Create new Pull Request
+
+## License
+
+See LICENSE.txt.
+
+## Author
+
+See credits for source of original code. This port was written by [Justin Leitgeb]
+(http://justinleitgeb.com).
 
 ## Build Status
 
