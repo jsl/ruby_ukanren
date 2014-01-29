@@ -35,7 +35,7 @@ describe MicroKanren::Lisp do
   describe "#map" do
     it "maps a function over a list" do
       func = -> (str) { str.upcase }
-      ast_to_s(map(func, cons("foo", cons("bar", nil)))).must_equal '("FOO" "BAR")'
+      lprint(map(func, cons("foo", cons("bar", nil)))).must_equal '("FOO" "BAR")'
     end
   end
 
@@ -82,30 +82,30 @@ describe MicroKanren::Lisp do
     end
   end
 
-  describe "#ast_to_s" do
+  describe "#lprint" do
     it "prints an expression correctly" do
       c = cons(1, cons(2, cons(cons(3, cons(4, nil)), cons(5, nil))))
-      ast_to_s(c).must_equal "(1 2 (3 4) 5)"
+      lprint(c).must_equal "(1 2 (3 4) 5)"
     end
 
     it "prints a cons cell representation of a simple cell" do
-      ast_to_s(cons('a', 'b')).must_equal '("a" . "b")'
+      lprint(cons('a', 'b')).must_equal '("a" . "b")'
     end
 
     it "represents Integers and Floats" do
-      ast_to_s(cons(1, 2)).must_equal '(1 . 2)'
+      lprint(cons(1, 2)).must_equal '(1 . 2)'
     end
 
     it "prints a nested expression" do
-      ast_to_s(cons('a', cons('b', 'c'))).must_equal '("a" "b" . "c")'
+      lprint(cons('a', cons('b', 'c'))).must_equal '("a" "b" . "c")'
     end
 
     it "represents Arrays (in scheme, vectors) correctly in printed form" do
-      ast_to_s(cons('a', [])).must_equal '("a" . [])'
+      lprint(cons('a', [])).must_equal '("a" . [])'
     end
 
     it "represents nil elements (in scheme, '())" do
-      ast_to_s(cons('a', nil)).must_equal '("a")'
+      lprint(cons('a', nil)).must_equal '("a")'
     end
   end
 

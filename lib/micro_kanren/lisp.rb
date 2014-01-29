@@ -53,15 +53,15 @@ module MicroKanren
 
     # Converts Lisp AST to a String. Algorithm is a recursive implementation of
     # http://www.mat.uc.pt/~pedro/cientificos/funcional/lisp/gcl_22.html#SEC1238.
-    def ast_to_s(node, cons_in_cdr = false)
+    def lprint(node, cons_in_cdr = false)
       if cons?(node)
         str = cons_in_cdr ? '' : '('
-        str += ast_to_s(car(node))
+        str += lprint(car(node))
 
         if cons?(cdr(node))
-          str += ' ' + ast_to_s(cdr(node), true)
+          str += ' ' + lprint(cdr(node), true)
         else
-          str += ' . ' + ast_to_s(cdr(node)) unless cdr(node).nil?
+          str += ' . ' + lprint(cdr(node)) unless cdr(node).nil?
         end
 
         cons_in_cdr ? str : str << ')'
