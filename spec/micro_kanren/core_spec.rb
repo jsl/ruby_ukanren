@@ -105,7 +105,7 @@ describe MicroKanren::Core do
     lprint(res).must_equal '((nil _.0 _.0) ((_.0) _.1 (_.0 . _.1)))'
   end
 
-  it "#many non-ans" do
+  it "many non-ans" do
     res = take(1, many_non_ans.call(empty_state))
     lprint(res).must_equal '(((([0] . 3)) . 1))'
   end
