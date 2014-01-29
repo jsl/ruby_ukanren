@@ -41,9 +41,7 @@ module MicroKanren
                     -> (s_c) {
                       -> { appendo2.call(d, s, res).call(s_c) }
                     },
-                    eq(cons(a, res), out)
-                  )
-                }))})}))}
+                    eq(cons(a, res), out))}))})}))}
     end
 
     def call_appendo
