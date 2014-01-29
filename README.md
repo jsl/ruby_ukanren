@@ -2,6 +2,12 @@
 
 A port of microKanren, a minimalistic logic programming language, to Ruby.
 
+## Description
+
+This is a port of microKanren to Ruby. It remains extremely close to the
+original implementation, which was written for [
+Petite Chez Scheme](http://www.scheme.com/petitechezscheme.html).
+
 ## Installation
 
 Add this line to your application's Gemfile:
@@ -18,16 +24,23 @@ Or install it yourself as:
 
 ## Usage
 
+The following example demonstrates how MicroKanren can be used from the console:
+
 ```ruby
-require 'micro_kanren'
-include MicroKanren::Core
+> require 'micro_kanren'
+> include MicroKanren::Core
+> include MicroKanren::MiniKanrenWrappers
 
-call_fresh(-> (q) { eq(q, 5) }).call(empty_state)
-
-# The result is a set of nested lambda cons cells equivalent to ((([0] . 5 )) . 1)).
+> res = call_fresh(-> (q) { eq(q, 5) }).call(empty_state)
+> puts lprint(res)
+(((([0] . 5)) . 1))
 ```
 
-See the language_spec for more examples.
+See the
+[spec file](https://github.com/jsl/ruby_ukanren/blob/master/spec/micro_kanren/core_spec.rb)
+for more examples. The spec file is almost an exact port of the [microKanren tests
+written in Scheme](https://github.com/jasonhemann/microKanren/blob/master/microKanren-test.scm).
+
 ## Credits
 
 The code in this gem is closely based on the following sources:
@@ -40,8 +53,6 @@ The code in this gem is closely based on the following sources:
   [Scott Vokes' port of microKanren to Lua](https://github.com/silentbicycle/lua-ukanren).
   It was great to have the Lua code as a second example of the implementation in
   the paper, and it made my job especially easy since Lua is so similar to Ruby.
-* Finally, I used the [microKanren examples in Scheme](https://github.com/jasonhemann/microKanren)
-  to see if this port worked as expected.
 
 ## Dependencies
 
