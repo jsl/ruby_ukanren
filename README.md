@@ -4,9 +4,10 @@ A port of microKanren, a minimalistic logic programming language, to Ruby.
 
 ## Description
 
-This is a port of microKanren to Ruby. It remains extremely close to the
-original implementation, which was written for [
-Petite Chez Scheme](http://www.scheme.com/petitechezscheme.html).
+This is a port of [microKanren](http://webyrd.net/scheme-2013/papers/HemannMuKanren2013.pdf)
+to Ruby. It is an almost exact translation of
+[the original implementation](https://github.com/jasonhemann/microKanren),
+which was written for [Petite Chez Scheme](http://www.scheme.com/petitechezscheme.html).
 
 ## Installation
 
