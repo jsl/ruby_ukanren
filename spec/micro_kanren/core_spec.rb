@@ -151,4 +151,9 @@ describe MicroKanren::Core do
       ast_to_s(res).must_equal '((nil _.0 _.0) ((_.0) _.1 (_.0 . _.1)))'
     end
   end
+
+  it "#many non-ans" do
+    res = take(1, many_non_ans.call(empty_state))
+    ast_to_s(res).must_equal '(((([0] . 3)) . 1))'
+  end
 end

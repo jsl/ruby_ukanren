@@ -72,5 +72,29 @@ module MicroKanren
       appendo2.call(cons(:a, nil), cons(:b, nil), cons(:a, cons(:b, nil)))
     end
 
+    def relo
+      -> (x) {
+        call_fresh(-> (x1) {
+          call_fresh(-> (x2) {
+            conj(
+              eq(x, cons(x1, x2)),
+              disj(
+                eq(x1, x2),
+                -> (s_c) {
+                  -> { relo.call(x).call(s_c) }
+                }
+              )
+            )
+          })
+        })
+      }
+    end
+
+    def many_non_ans
+      call_fresh(-> (x) {
+        disj(
+          relo.call(cons(5, 6)),
+          eq(x, 3))})
+    end
   end
 end
