@@ -9,8 +9,9 @@ module MicroKanren
     def cdr(z)    ; z.cdr    ; end
 
     def cons?(d)
-      d.respond_to?(:ccel?) && d.ccel?
+      d.is_a?(MicroKanren::Cons)
     end
+    # Why did you alias `:cons?` like this?
     alias :pair? :cons?
 
     def map(func, list)
@@ -48,41 +49,11 @@ module MicroKanren
       end
     end
 
-    # Converts Lisp AST to a String. Algorithm is a recursive implementation of
-    # http://www.mat.uc.pt/~pedro/cientificos/funcional/lisp/gcl_22.html#SEC1238.
-    def lprint(node, cons_in_cdr = false)
-      if cons?(node)
-        str = cons_in_cdr ? '' : '('
-        str += lprint(car(node))
-
-        if cons?(cdr(node))
-          str += ' ' + lprint(cdr(node), true)
-        else
-          str += ' . ' + lprint(cdr(node)) unless cdr(node).nil?
-        end
-
-        cons_in_cdr ? str : str << ')'
-      else
-        atom_string(node)
-      end
-    end
-
     def lists_equal?(a, b)
       if cons?(a) && cons?(b)
         lists_equal?(car(a), car(b)) && lists_equal?(cdr(a), cdr(b))
       else
         a == b
-      end
-    end
-
-    private
-
-    def atom_string(node)
-      case node
-      when NilClass, Array, String
-        node.inspect
-      else
-        node.to_s
       end
     end
 
