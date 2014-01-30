@@ -1,15 +1,12 @@
 module MicroKanren
   module Lisp
 
-    # Returns a Cons cell that is also marked as such for later identification.
-    def cons(x, y)
-      -> (m) { m.call(x, y) }.tap do |func|
-        func.instance_eval{ def ccel? ; true ; end }
-      end
+    def cons(x,y)
+      Cons.new(x,y)
     end
 
-    def car(z)     ; z.call(-> (p, q) { p }) ; end
-    def cdr(z)     ; z.call(-> (p, q) { q }) ; end
+    def car(z)    ; z.car    ; end
+    def cdr(z)    ; z.cdr    ; end
 
     def cons?(d)
       d.respond_to?(:ccel?) && d.ccel?
