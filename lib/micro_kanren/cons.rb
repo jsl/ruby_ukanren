@@ -11,12 +11,15 @@ module MicroKanren
     # http://www.mat.uc.pt/~pedro/cientificos/funcional/lisp/gcl_22.html#SEC1238.
     def to_s(cons_in_cdr = false)
       str = cons_in_cdr ? '' : '('
-      cons?(self.car) ? str += self.car.to_s : str += atom_string(self.car)
 
-      if cons?(self.cdr)
-        str += ' ' + self.cdr.to_s(true)
+      str += cons?(self.car) ? self.car.to_s : atom_string(self.car)
+
+      str += if cons?(self.cdr)
+        ' ' + self.cdr.to_s(true)
+      elsif self.cdr == nil
+        ''
       else
-        str += ' . ' + atom_string(self.cdr) unless self.cdr.nil?
+        ' . ' + atom_string(self.cdr)
       end
 
       cons_in_cdr ? str : str << ')'

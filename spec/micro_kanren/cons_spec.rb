@@ -20,7 +20,7 @@ describe MicroKanren::Cons do
       e.to_s.must_equal "(1)"
       # Is this an illogical list to be testing?
       f = cons(nil, 1)
-      f.to_s.must_equal "(nil . 1)  "
+      f.to_s.must_equal "(nil . 1)"
     end
 
     it "prints a cons cell representation of a simple cell" do
