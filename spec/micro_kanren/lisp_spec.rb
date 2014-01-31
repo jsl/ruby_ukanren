@@ -35,7 +35,7 @@ describe MicroKanren::Lisp do
   describe "#map" do
     it "maps a function over a list" do
       func = -> (str) { str.upcase }
-      lprint(map(func, cons("foo", cons("bar", nil)))).must_equal '("FOO" "BAR")'
+      map(func, cons("foo", cons("bar", nil))).to_s.must_equal '("FOO" "BAR")'
     end
   end
 
@@ -79,33 +79,6 @@ describe MicroKanren::Lisp do
 
     it "is false for an empty list" do
       pair?(nil).must_equal false
-    end
-  end
-
-  describe "#lprint" do
-    it "prints an expression correctly" do
-      c = cons(1, cons(2, cons(cons(3, cons(4, nil)), cons(5, nil))))
-      lprint(c).must_equal "(1 2 (3 4) 5)"
-    end
-
-    it "prints a cons cell representation of a simple cell" do
-      lprint(cons('a', 'b')).must_equal '("a" . "b")'
-    end
-
-    it "represents Integers and Floats" do
-      lprint(cons(1, 2)).must_equal '(1 . 2)'
-    end
-
-    it "prints a nested expression" do
-      lprint(cons('a', cons('b', 'c'))).must_equal '("a" "b" . "c")'
-    end
-
-    it "represents Arrays (in scheme, vectors) correctly in printed form" do
-      lprint(cons('a', [])).must_equal '("a" . [])'
-    end
-
-    it "represents nil elements (in scheme, '())" do
-      lprint(cons('a', nil)).must_equal '("a")'
     end
   end
 
