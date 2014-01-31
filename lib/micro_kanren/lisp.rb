@@ -1,18 +1,15 @@
 module MicroKanren
   module Lisp
 
-    # Returns a Cons cell that is also marked as such for later identification.
     def cons(x, y)
-      -> (m) { m.call(x, y) }.tap do |func|
-        func.instance_eval{ def ccel? ; true ; end }
-      end
+      Cons.new(x, y)
     end
 
-    def car(z)     ; z.call(-> (p, q) { p }) ; end
-    def cdr(z)     ; z.call(-> (p, q) { q }) ; end
+    def car(z)    ; z.instance_variable_get(:@car)    ; end
+    def cdr(z)    ; z.instance_variable_get(:@cdr)    ; end
 
     def cons?(d)
-      d.respond_to?(:ccel?) && d.ccel?
+      d.is_a?(MicroKanren::Cons)
     end
     alias :pair? :cons?
 
@@ -24,10 +21,10 @@ module MicroKanren
       list.nil? ? 0 : 1 + length(cdr(list))
     end
 
-    # We implement scheme cons cells as Procs. This function returns a boolean
-    # identically to the Scheme procedure? function to avoid false positives.
+    # This function returns a boolean identically to the
+    # Scheme procedure? function to avoid false positives.
     def procedure?(elt)
-      elt.is_a?(Proc) && !cons?(elt)
+      elt.is_a?(Proc)
     end
 
     # Search association list by predicate function.
@@ -51,41 +48,11 @@ module MicroKanren
       end
     end
 
-    # Converts Lisp AST to a String. Algorithm is a recursive implementation of
-    # http://www.mat.uc.pt/~pedro/cientificos/funcional/lisp/gcl_22.html#SEC1238.
-    def lprint(node, cons_in_cdr = false)
-      if cons?(node)
-        str = cons_in_cdr ? '' : '('
-        str += lprint(car(node))
-
-        if cons?(cdr(node))
-          str += ' ' + lprint(cdr(node), true)
-        else
-          str += ' . ' + lprint(cdr(node)) unless cdr(node).nil?
-        end
-
-        cons_in_cdr ? str : str << ')'
-      else
-        atom_string(node)
-      end
-    end
-
     def lists_equal?(a, b)
       if cons?(a) && cons?(b)
         lists_equal?(car(a), car(b)) && lists_equal?(cdr(a), cdr(b))
       else
         a == b
-      end
-    end
-
-    private
-
-    def atom_string(node)
-      case node
-      when NilClass, Array, String
-        node.inspect
-      else
-        node.to_s
       end
     end
 
