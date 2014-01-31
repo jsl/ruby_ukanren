@@ -30,7 +30,7 @@ The following example demonstrates how MicroKanren can be used from the console:
 > include MicroKanren::MiniKanrenWrappers
 
 > res = call_fresh(-> (q) { eq(q, 5) }).call(empty_state)
-> lprint(res)
+> res.to_s
 (((([0] . 5)) . 1))
 ```
 

@@ -1,17 +1,16 @@
 module MicroKanren
   module Lisp
 
-    def cons(x,y)
-      Cons.new(x,y)
+    def cons(x, y)
+      Cons.new(x, y)
     end
 
-    def car(z)    ; z.car    ; end
-    def cdr(z)    ; z.cdr    ; end
+    def car(z)    ; z.instance_variable_get(:@car)    ; end
+    def cdr(z)    ; z.instance_variable_get(:@cdr)    ; end
 
     def cons?(d)
       d.is_a?(MicroKanren::Cons)
     end
-    # Why did you alias `:cons?` like this?
     alias :pair? :cons?
 
     def map(func, list)
@@ -22,10 +21,10 @@ module MicroKanren
       list.nil? ? 0 : 1 + length(cdr(list))
     end
 
-    # We implement scheme cons cells as Procs. This function returns a boolean
-    # identically to the Scheme procedure? function to avoid false positives.
+    # This function returns a boolean identically to the
+    # Scheme procedure? function to avoid false positives.
     def procedure?(elt)
-      elt.is_a?(Proc) && !cons?(elt)
+      elt.is_a?(Proc)
     end
 
     # Search association list by predicate function.
