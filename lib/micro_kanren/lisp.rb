@@ -21,6 +21,10 @@ module MicroKanren
       list.nil? ? 0 : 1 + length(cdr(list))
     end
 
+    def list(*values)
+      cons(values[0], list(*values[1..-1])) unless values.empty?
+    end
+
     # This function returns a boolean identically to the
     # Scheme procedure? function to avoid false positives.
     def procedure?(elt)
@@ -47,14 +51,5 @@ module MicroKanren
         false
       end
     end
-
-    def lists_equal?(a, b)
-      if cons?(a) && cons?(b)
-        lists_equal?(car(a), car(b)) && lists_equal?(cdr(a), cdr(b))
-      else
-        a == b
-      end
-    end
-
   end
 end

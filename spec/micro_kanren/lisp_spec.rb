@@ -22,6 +22,12 @@ describe MicroKanren::Lisp do
     end
   end
 
+  describe "#list" do
+    it "should return a proper list containing the given values" do
+      list(:a, :b, :c).must_equal cons(:a, cons(:b, cons(:c, nil)))
+    end
+  end
+
   describe "#length" do
     it "returns 0 for an empty list" do
       length(nil).must_equal 0
@@ -48,7 +54,7 @@ describe MicroKanren::Lisp do
       alist = cons(al1, cons(al2, cons(al3, nil)))
 
       res = assp(->(i) { i.even? }, alist)
-      lists_equal?(res, cons(4, cons(:c, nil))).must_equal true
+      res.must_equal cons(4, cons(:c, nil))
     end
 
     it "returns false if there is no matching element found" do
@@ -79,16 +85,6 @@ describe MicroKanren::Lisp do
 
     it "is false for an empty list" do
       pair?(nil).must_equal false
-    end
-  end
-
-  describe "#lists_equal?" do
-    it "is true if the lists are equal" do
-      lists_equal?(cons(1, cons(2, nil)), cons(1, cons(2, nil))).must_equal true
-    end
-
-    it "is false if the lists contain different objects" do
-      lists_equal?(cons(1, cons(2, nil)), cons(1, nil)).must_equal false
     end
   end
 end

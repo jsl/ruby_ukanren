@@ -43,4 +43,15 @@ describe MicroKanren::Cons do
       cons('a', nil).to_s.must_equal '("a")'
     end
   end
+
+  describe "#==(other)" do
+    it "is true if the lists are equal" do
+      cons(1, cons(2, nil)).must_equal cons(1, cons(2, nil))
+    end
+
+    it "is false if the lists contain different objects" do
+      cons(1, cons(2, nil)).wont_equal cons(1, nil)
+    end
+  end
+
 end

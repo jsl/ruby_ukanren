@@ -25,6 +25,10 @@ module MicroKanren
       cons_in_cdr ? str : str << ')'
     end
 
+    def ==(other)
+      cons?(other) ? car(self) == car(other) && cdr(self) == cdr(other) : false
+    end
+
     private
 
     def atom_string(node)
