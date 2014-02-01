@@ -5,8 +5,8 @@ module MicroKanren
       Cons.new(x, y)
     end
 
-    def car(z)    ; z.instance_variable_get(:@car)    ; end
-    def cdr(z)    ; z.instance_variable_get(:@cdr)    ; end
+    def car(z) ; z.car ; end
+    def cdr(z) ; z.cdr ; end
 
     def cons?(d)
       d.is_a?(MicroKanren::Cons)

@@ -1,6 +1,6 @@
 module MicroKanren
   class Cons
-    include Lisp
+    attr_reader :car, :cdr
 
     # Returns a Cons cell (read: instance) that is also marked as such for later identification.
     def initialize(car, cdr)
@@ -12,21 +12,21 @@ module MicroKanren
     def to_s(cons_in_cdr = false)
       str = cons_in_cdr ? '' : '('
 
-      str += cons?(car(self)) ? car(self).to_s : atom_string(car(self))
+      str += self.car.is_a?(Cons) ? self.car.to_s : atom_string(self.car)
 
-      str += if cons?(cdr(self))
-        ' ' + cdr(self).to_s(true)
-      elsif cdr(self).nil?
+      str += if self.cdr.is_a?(Cons)
+        ' ' + self.cdr.to_s(true)
+      elsif self.cdr.nil?
         ''
       else
-        ' . ' + atom_string(cdr(self))
+        ' . ' + atom_string(self.cdr)
       end
 
       cons_in_cdr ? str : str << ')'
     end
 
     def ==(other)
-      cons?(other) ? car(self) == car(other) && cdr(self) == cdr(other) : false
+      other.is_a?(Cons) ? self.car == other.car && self.cdr == other.cdr : false
     end
 
     private
