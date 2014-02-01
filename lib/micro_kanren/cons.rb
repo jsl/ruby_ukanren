@@ -2,7 +2,8 @@ module MicroKanren
   class Cons
     attr_reader :car, :cdr
 
-    # Returns a Cons cell (read: instance) that is also marked as such for later identification.
+    # Returns a Cons cell (read: instance) that is also marked as such for
+    # later identification.
     def initialize(car, cdr)
       @car, @cdr = car, cdr
     end
@@ -14,9 +15,10 @@ module MicroKanren
 
       str += self.car.is_a?(Cons) ? self.car.to_s : atom_string(self.car)
 
-      str += if self.cdr.is_a?(Cons)
+      str += case self.cdr
+      when Cons
         ' ' + self.cdr.to_s(true)
-      elsif self.cdr.nil?
+      when NilClass
         ''
       else
         ' . ' + atom_string(self.cdr)
