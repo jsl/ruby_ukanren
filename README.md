@@ -57,6 +57,12 @@ The code in this gem is closely based on the following sources:
 This project requires Ruby 2.0 or higher. You can see which Rubies work with
 this project in the [Travis CI Build Status](https://travis-ci.org/jsl/ruby_ukanren).
 
+**Note that there does seem to be a particular early patch level of of a Ruby interpreter
+that breaks Ruby ruby_ukanren! If the unit tests don't pass for you locally, or the
+example in this file doesn't work, try upgrading your Ruby to a recent patch
+level of one of the supported Ruby versions that is currently passing on Travis CI.
+See [this issue](https://github.com/jsl/ruby_ukanren/issues/6) for more.**
+
 ## Contributing
 
 1. Fork it ( http://github.com/jsl/ruby_ukanren/fork )
